@@ -41,12 +41,14 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         assert type(index) == int
-        assert index <= max(self.indexed_dataset().keys())
+        max_index = max(self.indexed_dataset().keys())
+        assert index <= max_index
         assert index >= 0
 
         next_index = index if index else 0
         page_data = []
-        while len(page_data) < page_size:
+
+        while len(page_data) < page_size and next_index <= max_index:
             current_row = self.indexed_dataset().get(next_index)
             if current_row is not None:
                 page_data.append(current_row)
