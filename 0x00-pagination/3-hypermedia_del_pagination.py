@@ -40,7 +40,8 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        assert type(index) == int and index < len(self.indexed_dataset()) and index >= 0
+        assert type(index) == int and index < len(self.indexed_dataset())
+        assert index >= 0
 
         next_index = index
         page_data = []
@@ -53,6 +54,6 @@ class Server:
         return {
                 "index": index,
                 "next_index": next_index,
-                "page_size": page_size,
+                "page_size": len(page_data),
                 "data": page_data
                 }
