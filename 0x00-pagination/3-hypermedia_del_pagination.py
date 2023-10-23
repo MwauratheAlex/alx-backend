@@ -45,22 +45,19 @@ class Server:
         assert index <= max_index
         assert index >= 0
 
-        next_index = index if index else 0
+        start = index if index else 0
         page_data = []
         data_count = 0
+        next_index = None
 
-        while data_count < page_size:
-            current_row = self.indexed_dataset().get(next_index)
-            if current_row is not None:
-                page_data.append(current_row)
+        for i, item in self.indexed_dataset().items():
+            if i >= start and data_count < page_size:
+                page_data.append(item)
                 data_count += 1
-            next_index += 1
-
-        next_row = self.indexed_dataset().get(next_index)
-            
-        while next_row is None:
-            next_index += 1
-            next_row = self.indexed_dataset().get(next_index)
+                continue
+            if data_count == page_size:
+                next_index = i
+                break
 
         return {
                 "index": index,
