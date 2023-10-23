@@ -49,12 +49,12 @@ class Server:
         page_data = []
         data_count = 0
 
-        while data_count <= page_size:
+        while data_count < page_size:
             current_row = self.indexed_dataset().get(next_index)
             if current_row is not None:
                 page_data.append(current_row)
+                data_count += 1
             next_index += 1
-            data_count += 1
 
         return {
                 "index": index,
