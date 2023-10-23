@@ -56,6 +56,12 @@ class Server:
                 data_count += 1
             next_index += 1
 
+        next_row = self.indexed_dataset().get(next_index)
+            
+        while next_row is None:
+            next_index += 1
+            next_row = self.indexed_dataset().get(next_index)
+
         return {
                 "index": index,
                 "next_index": next_index,
