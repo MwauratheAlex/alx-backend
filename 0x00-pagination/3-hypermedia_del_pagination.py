@@ -44,10 +44,7 @@ class Server:
         assert index <= max(self.indexed_dataset().keys())
         assert index >= 0
 
-        if index is None:
-            index = 0
-
-        next_index = index
+        next_index = index if index else 0
         page_data = []
         while len(page_data) < page_size:
             current_row = self.indexed_dataset().get(next_index)
