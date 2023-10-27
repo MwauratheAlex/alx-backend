@@ -6,7 +6,7 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 print("max:", BaseCaching.MAX_ITEMS)
 
-BaseCaching.MAX_ITEMS = 1
+BaseCaching.MAX_ITEMS = 2
 my_cache = FIFOCache()
 my_cache.put("A", "Hello")
 my_cache.put("B", "World")
