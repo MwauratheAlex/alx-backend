@@ -1,29 +1,33 @@
-import { createClient, print } from "redis";
+import { createClient, print } from 'redis';
 
-const client = createClient()
+const client = createClient();
+
+client.on('connect', () => console.log('Redis client connected to server'));
 
 client.on('error', (err) => {
-    console.log(`Error connecting: ${err}`);
-})
+  console.log(`Redis client not connected to the server: ${err}`)
+});
 
-client.on('connect', () => console.log("Connected to client"));
+const hsetKey = 'HolbertonSchools';
 
-const hashKey = "HolbertonSchools";
+const hsetValues = {
+  'Portland': 50,
+  'Seattle': 80,
+  'New York': 20,
+  'Bogota': 20,
+  'Cali': 40,
+  'Paris': 2
+};
 
-const schools =  {
-    "Portland": 50,
-    "Seattle": 80,
-    "New York": 20,
-    "Bogota": 20,
-    "Cali": 40,
-    "Paris": 20
+for (let field of Object.keys(hsetValues)) {
+  const value = hsetValues[field];
+  client.hset(hsetKey, field, value, print);
 }
 
-for (let school of Object.keys(schools)) {
-    client.HSET(hashKey, school, schools[school], print);
-}
-
-client.HGETALL(hashKey, (err, values) => {
-    err && console.log("Error occured: " + err);
-    console.log(values);
-})
+client.hgetall(hsetKey, (err, value) => {
+  if (err) {
+    console.log(`Unable to fetch values: $err`);
+    return;
+  }
+  console.log(value);
+});
