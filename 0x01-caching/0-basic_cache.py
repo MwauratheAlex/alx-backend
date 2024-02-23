@@ -6,6 +6,7 @@ from base_caching import BaseCaching
 
 class BasicCache(BaseCaching):
     """Implements a basic caching system"""
+
     def __init__(self):
         super().__init__()
 
