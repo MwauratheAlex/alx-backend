@@ -5,11 +5,7 @@ const client = createClient()
   .on('connect', () => console.log('Redis client connected to the server'));
 
 function setNewSchool(schoolName, value) {
-  client.set(schoolName, value, (error, reply) => {
-    if (error) console.log("Error:", error);
-    print(reply)
-  });
-
+  client.set(schoolName, value, print);
 }
 
 function displaySchoolValue(schoolName) {
